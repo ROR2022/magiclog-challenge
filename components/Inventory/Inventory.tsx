@@ -63,7 +63,7 @@ const Inventory = () => {
       const { data, error } = response;
 
       if (data && !error) {
-        console.log("dataProducts:", data);
+        //console.log("dataProducts:", data);
         const tempData = data.map((product: any) => {
           return {
             ...product,
@@ -82,12 +82,18 @@ const Inventory = () => {
 
   return (
     <div>
-      <Button color="primary" onClick={() => router.push("/createProduct")}>
-        Create Product
-      </Button>
-      <div className="mt-4">
+      <div className="flex justify-center">
+        <Button color="primary" onClick={() => router.push("/createProduct")}>
+          Create Product
+        </Button>
+      </div>
+      <div className="mt-4 flex justify-center">
         {dataProducts.length > 0 && (
-          <TableProducts columns={columns} rows={dataProducts} />
+          <TableProducts
+            columns={columns}
+            fetchDataProducts={fetchDataProducts}
+            rows={dataProducts}
+          />
         )}
       </div>
     </div>

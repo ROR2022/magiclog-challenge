@@ -123,7 +123,10 @@ const ProductCard: FC<ProductCardProps> = ({ dataProduct }) => {
       </CardHeader>
       <CardBody className="overflow-visible py-2 flex justify-center items-center">
         <div className="w-full rounded-xl flex justify-center items-center">
-          <Image alt={`Image of ${name}`} src={imageUrl} />
+          <Image
+            alt={`Image of ${name}`}
+            src={imageUrl ? imageUrl : "/logoHelp.png"}
+          />
         </div>
       </CardBody>
     </Card>

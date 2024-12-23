@@ -18,7 +18,7 @@ interface TableOrdersProps {
 }
 
 const columns = [
-  { key: "customerId", label: "Customer ID" },
+  { key: "customerId", label: "Customer Email" },
   { key: "products", label: "Products" },
   { key: "total", label: "Total" },
   { key: "details", label: "Details" },
@@ -38,7 +38,7 @@ const TableOrders: FC<TableOrdersProps> = ({ dataOrders }) => {
     const rowsTemp = dataOrders.map((order) => {
       return {
         key: order._id,
-        customerId: order.customerId,
+        customerId: order.customerId.email,
         products: order.products.map((product) => product.name).join(", "),
         total: order.total,
       };

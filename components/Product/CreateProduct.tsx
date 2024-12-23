@@ -1,8 +1,8 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useMediaQuery } from "usehooks-ts";
 import {
@@ -18,9 +18,9 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { title } from "../primitives";
 
 import { DataUser, RootState } from "@/redux/userSlice";
-import { createProduct } from "@/api/apiProduct";
+import { createProduct, updateProduct } from "@/api/apiProduct";
 
-export  interface IProduct {
+export interface IProduct {
   _id?: string;
   vendorId: string;
   name: string;
@@ -52,9 +52,14 @@ const validationSchema = Yup.object({
     .required("Stock is required"),
 });
 
-const CreateProduct = () => {
+interface CreateProductProps {
+  dataProduct?: IProduct;
+}
+
+const CreateProduct: FC<CreateProductProps> = ({ dataProduct }) => {
   const formik = useFormik({
     initialValues: initFormValues,
+    enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: async (dataValues) => {
       //console.log(values);
@@ -67,16 +72,32 @@ const CreateProduct = () => {
   const isMobile = useMediaQuery("(max-width: 640px)");
   const user: DataUser = useSelector((state: RootState) => state.user);
   const router = useRouter();
-  const dispatch = useDispatch();
-  const [imageProduct, setImageProduct] = useState<File | null>(null);
+  //const dispatch = useDispatch();
+  const [imageProduct, setImageProduct] = useState<File | string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log("Create Product", user);
+    //console.log("Create Product", user);
     if (user._id) {
       formik.setValues({ ...values, vendorId: user._id });
     }
   }, [user]);
+
+  useEffect(() => {
+    if (dataProduct) {
+      //console.log("Formik Data Product: ", dataProduct);
+
+      formik.setValues({
+        vendorId: dataProduct.vendorId,
+        name: dataProduct.name,
+        sku: dataProduct.sku,
+        price: dataProduct.price,
+        stock: dataProduct.stock,
+      });
+
+      setImageProduct(dataProduct.imageUrl);
+    }
+  }, [dataProduct]);
 
   const onSubmitProduct = async (dataValues: any) => {
     console.log("submiting product values: ", dataValues);
@@ -84,7 +105,7 @@ const CreateProduct = () => {
       let formData = null;
 
       setLoading(true);
-      if (imageProduct) {
+      if (imageProduct && typeof imageProduct !== "string") {
         formData = new FormData();
         formData.append("file", imageProduct);
         formData.append("imageUrl", "");
@@ -95,21 +116,36 @@ const CreateProduct = () => {
       } else {
         formData = {
           ...dataValues,
-          imageUrl: "",
+          imageUrl:
+            imageProduct && typeof imageProduct === "string"
+              ? imageProduct
+              : "",
           cont: 0,
         };
       }
-      const resCreateProduct = await createProduct(formData);
-      const { data, error } = resCreateProduct;
+      let resCreateOrEditProduct = null;
+
+      if (dataProduct) {
+        console.log("Editing Product: ", dataProduct._id);
+        resCreateOrEditProduct = await updateProduct(
+          String(dataProduct._id),
+          formData,
+        );
+      } else {
+        resCreateOrEditProduct = await createProduct(formData);
+      }
+
+      //const resCreateProduct = await createProduct(formData);
+      const { data, error } = resCreateOrEditProduct;
 
       if (data && !error) {
-        console.log("Product created: ", data);
+        console.log("Product created/edited: ", data);
         router.push("/");
-      }else{
-        console.log("Error on create product: ", data);
+      } else {
+        console.log("Error on create/edit product: ", data);
       }
     } catch (error) {
-      console.log("Error on create product: ", error);
+      console.log("Error on create/edit product: ", error);
     }
   };
 
@@ -122,7 +158,9 @@ const CreateProduct = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-full">
-      <h2 className={title()}> Create Product </h2>
+      <h2 className={title()}>
+        {dataProduct ? "Edit Product" : "Create Product"}{" "}
+      </h2>
       <Card className="mt-3" style={{ width: isMobile ? "100%" : "500px" }}>
         {/* <h2 className="text-3xl font-bold mb-4 text-center">Login</h2> */}
         <CardBody>
@@ -207,7 +245,11 @@ const CreateProduct = () => {
                     alt="user image"
                     className="rounded-full"
                     height={100}
-                    src={URL.createObjectURL(imageProduct)}
+                    src={
+                      typeof imageProduct === "string"
+                        ? imageProduct
+                        : URL.createObjectURL(imageProduct)
+                    }
                     width={100}
                   />
                   <FaRegTrashAlt
@@ -226,6 +268,8 @@ const CreateProduct = () => {
                 <div className="text-white">
                   <CircularProgress aria-label="Loading..." />
                 </div>
+              ) : dataProduct ? (
+                "Edit Product"
               ) : (
                 "Create Product"
               )}

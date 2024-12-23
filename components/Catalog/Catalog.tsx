@@ -22,7 +22,7 @@ const Catalog = () => {
       const { data, error } = response;
 
       if (data && !error) {
-        console.log("Products: ", data);
+        //console.log("Products: ", data);
         setProducts(data);
       }
 

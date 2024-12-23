@@ -3,7 +3,7 @@ import Cart from "@/components/Cart/Cart";
 
 export default function PricingPage() {
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center">
       <h2 className={title()}>Shopping Cart</h2>
       <Cart />
     </div>

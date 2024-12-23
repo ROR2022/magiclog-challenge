@@ -40,11 +40,11 @@ export const Navbar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("dataUser: ", user);
+    //console.log("dataUser: ", user);
   }, [user]);
 
   useEffect(() => {
-    console.log("storedDataUser: ", storedDataUser);
+    //console.log("storedDataUser: ", storedDataUser);
     if (storedDataUser.email && !user.email) {
       dispatch(setUser(storedDataUser));
     }

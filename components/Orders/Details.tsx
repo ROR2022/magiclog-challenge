@@ -53,8 +53,8 @@ const ShowDetails = () => {
 
 const Details: FC<DetailsProps> = ({ dataOrder }) => {
   return (
-    <div>
-      Order Details
+    <div className="flex flex-col justify-center items-center mb-16">
+      <h2 className="text-3xl font-bold">Order Details</h2>
       <div className="my-4 flex flex-col gap-3">
         {dataOrder.products.map((product) => (
           <ProductCart
@@ -64,7 +64,7 @@ const Details: FC<DetailsProps> = ({ dataOrder }) => {
           />
         ))}
       </div>
-      <p>Total: ${dataOrder.total}</p>
+      <p className="text-xl font-bold">Total: ${dataOrder.total}</p>
     </div>
   );
 };

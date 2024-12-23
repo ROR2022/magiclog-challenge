@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useLocalStorage } from "usehooks-ts";
+import { useLocalStorage, useMediaQuery } from "usehooks-ts";
 
 import { IProduct } from "../Product/CreateProduct";
 
@@ -13,13 +13,14 @@ import { getOrders, getOrdersByCustomerId } from "@/api/apiOrder";
 
 export interface IOrder {
   _id?: string;
-  customerId: string;
+  customerId: string | any;
   products: Array<IProduct>;
   total: number;
 }
 
 const Orders = () => {
   const router = useRouter();
+  const isMobile = useMediaQuery("(max-width: 640px)");
   const [dataOrders, setDataOrders] = useState<Array<IOrder>>([]);
   const [storedDataUser] = useLocalStorage<DataUser>(
     LOCALSTORAGE_KEY,
@@ -43,7 +44,7 @@ const Orders = () => {
       } else {
         response = await getOrdersByCustomerId(storedDataUser._id);
       }
-      console.log("Response Orders: ", response);
+      //console.log("Response Orders: ", response);
       const { data, error } = response;
 
       if (data && !error) {
@@ -57,7 +58,13 @@ const Orders = () => {
   };
 
   return (
-    <div className="mt-4">
+    <div
+      className="mt-4"
+      style={{
+        overflow: "auto",
+        width: isMobile ? "90vw" : "800px",
+      }}
+    >
       {dataOrders.length > 0 && <TableOrders dataOrders={dataOrders} />}
     </div>
   );
