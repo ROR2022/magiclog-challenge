@@ -8,12 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 
 import { DataUser, initialState, RootState, setUser } from "@/redux/userSlice";
-import { LOCALSTORAGE_KEY, COOKIE_KEY } from "@/dataEnv/dataEnv";
+import { LOCALSTORAGE_KEY, COOKIE_KEY, LOCALSTORAGE_CART } from "@/dataEnv/dataEnv";
+import { IProduct } from "../Product/CreateProduct";
 
 const Logout = () => {
   const router = useRouter();
   const user = useSelector((state: RootState) => state.user);
   const [selectedLanguage, setSelectedLanguage] = React.useState<string>("en");
+  const [cart, setCart] = useLocalStorage<IProduct[]>(LOCALSTORAGE_CART, []);
   const [storedDataUser, setStoredDataUser] = useLocalStorage<DataUser>(
     LOCALSTORAGE_KEY,
     user
@@ -34,6 +36,9 @@ const Logout = () => {
     dispatch(setUser(initialState));
     setStoredDataUser(initialState);
     Cookies.remove(COOKIE_KEY);
+    if (cart.length > 0) {
+      setCart([]);
+    }
     router.push("/");
   };
 
