@@ -5,6 +5,8 @@ import { CircularProgress } from "@nextui-org/progress";
 import ProductCard from "../Product/ProductCard";
 import { IProduct } from "../Product/CreateProduct";
 
+import FilterProducts from "./FilterProducts";
+
 import { getProducts } from "@/api/apiProduct";
 
 const Catalog = () => {
@@ -36,6 +38,12 @@ const Catalog = () => {
   return (
     <div style={{ width: "100%" }}>
       {loading && <CircularProgress aria-label="spinner..." />}
+      <div className="my-4">
+        <FilterProducts
+          fetchProducts={fetchProducts}
+          setProducts={setProducts}
+        />
+      </div>
       <div className="flex flex-row flex-wrap justify-center gap-3 mt-4">
         {products.map((product) => (
           <ProductCard key={product._id} dataProduct={product} />

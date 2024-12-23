@@ -27,3 +27,16 @@ export const loginUser = async (data) => {
     return error.response;
   }
 };
+
+export const getVendorsNames = async () => {
+  try {
+    const response = await axios.get(`${hostURL}/api/user/names`);
+
+    return response;
+  } catch (error) {
+    //eslint-disable-next-line
+    console.log("error getUsersNames:..", error);
+
+    return error.response;
+  }
+};

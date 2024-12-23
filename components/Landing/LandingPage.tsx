@@ -12,7 +12,7 @@ import { DataUser, initialState } from "@/redux/userSlice";
 const LandingPage = () => {
   const router = useRouter();
   //const isMobile = ;
-  const [isMobile] = useState(useMediaQuery("(max-width: 640px)"));
+  const isMobile = useMediaQuery("(max-width: 640px)");
   const [storedDataUser] = useLocalStorage<DataUser>(
     LOCALSTORAGE_KEY,
     initialState,

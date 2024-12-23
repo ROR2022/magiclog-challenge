@@ -84,3 +84,16 @@ export const deleteProduct = async (productId) => {
     return error.response;
   }
 };
+
+export const getProductsByFilter = async (filter) => {
+  try {
+    const response = await axios.post(`${hostURL}/api/product/filter`, filter);
+
+    return response;
+  } catch (error) {
+    //eslint-disable-next-line
+    console.log("error getProductsByFilter:..", error);
+
+    return error.response;
+  }
+}

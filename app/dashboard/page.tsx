@@ -1,5 +1,11 @@
+"use client";
+import dynamic from "next/dynamic";
+
 import { title } from "@/components/primitives";
-import Catalog from "@/components/Catalog/Catalog";
+//import Catalog from "@/components/Catalog/Catalog";
+const Catalog = dynamic(() => import("@/components/Catalog/Catalog"), {
+  ssr: false,
+});
 
 export default function AboutPage() {
   return (
