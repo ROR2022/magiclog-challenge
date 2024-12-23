@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useMediaQuery, useLocalStorage } from "usehooks-ts";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardFooter, Image, Button } from "@nextui-org/react";
 
 import { title } from "../primitives";
@@ -11,7 +11,8 @@ import { DataUser, initialState } from "@/redux/userSlice";
 
 const LandingPage = () => {
   const router = useRouter();
-  const isMobile = useMediaQuery("(max-width: 640px)");
+  //const isMobile = ;
+  const [isMobile] = useState(useMediaQuery("(max-width: 640px)"));
   const [storedDataUser] = useLocalStorage<DataUser>(
     LOCALSTORAGE_KEY,
     initialState,
