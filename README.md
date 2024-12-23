@@ -1,8 +1,8 @@
-# Next.js & NextUI Template
+# Next.js & NextUI Marketpalce
 
-This is a template for creating applications using Next.js 14 (app directory) and NextUI (v2).
+The purpose of this application is to develop a functional Marketplace that enables sellers and buyers to interact through an intuitive user interface (UI) and a robust API.
+The application includes features such as account creation, product registration and management, product search, and admin-exclusive functionalities, adhering to SOLID principles and development best practices.
 
-[Try it on CodeSandbox](https://githubbox.com/nextui-org/next-app-template)
 
 ## Technologies Used
 
@@ -16,17 +16,15 @@ This is a template for creating applications using Next.js 14 (app directory) an
 
 ## How to Use
 
-### Use the template with create-next-app
+### Clone the project
 
-To create a new project based on this template using `create-next-app`, run the following command:
+Run the following command:
 
 ```bash
-npx create-next-app -e https://github.com/nextui-org/next-app-template
+git clone https://github.com/ROR2022/magiclog-challenge.git
 ```
 
 ### Install dependencies
-
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
 
 ```bash
 npm install
@@ -37,16 +35,6 @@ npm install
 ```bash
 npm run dev
 ```
-
-### Setup pnpm (optional)
-
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
-
-```bash
-public-hoist-pattern[]=*@nextui-org/*
-```
-
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
 
 ## License
 
