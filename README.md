@@ -21,7 +21,7 @@ The application includes features such as account creation, product registration
 Run the following command:
 
 ```bash
-git clone 
+git clone https://github.com/ROR2022/magiclog-challenge.git
 ```
 
 ### Install dependencies
