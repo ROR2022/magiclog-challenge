@@ -115,77 +115,69 @@ const FilterProducts: FC<IFilterProducts> = ({
   };
 
   return (
-    <div>
-      <Card>
-        <CardBody>
-          <div
-            className={
-              isMobile
-                ? "flex flex-col justify-center items-center gap-3"
-                : "flex flex-row justify-between"
-            }
-          >
-            <div inert>
-              <Input
-                label="Search Products"
-                placeholder="Search by Name or SKU..."
-                value={dataFilter.query}
-                onValueChange={(data) => handleChange("query", data)}
-              />
-            </div>
-            <div>
-              <Slider
-                className="max-w-md"
-                defaultValue={0.4}
-                label="Price Range: $"
-                maxValue={1000}
-                minValue={0}
-                step={0.01}
-                value={dataFilter.price}
-                onChange={(data) => handleChange("price", data)}
-              />
-            </div>
-            {user?.roles?.includes("admin") && (
-              <div>
-                <Autocomplete
-                  className="max-w-xs"
-                  defaultItems={vendors}
-                  label="Select Vendor"
-                  placeholder="Select Vendor"
-                  selectedKey={dataFilter.vendorId}
-                  onSelectionChange={(data) => handleChange("vendorId", data)}
-                >
-                  {(item) => (
-                    <AutocompleteItem key={item.key}>
-                      {item.label}
-                    </AutocompleteItem>
-                  )}
-                </Autocomplete>
-              </div>
-            )}
-
-            <div
-              className={
-                noFilter
-                  ? "flex flex-col gap-3"
-                  : "flex flex-col items-center justify-center gap-3"
-              }
+    <div className="border-2 border-gray-200 p-4 rounded-xl">
+      <div
+        className={
+          isMobile
+            ? "flex flex-col justify-center items-center gap-3"
+            : "flex flex-row justify-between"
+        }
+      >
+        <div>
+          <Input
+            label="Search Products"
+            placeholder="Search by Name or SKU..."
+            value={dataFilter.query}
+            onValueChange={(data) => handleChange("query", data)}
+          />
+        </div>
+        <div>
+          <Slider
+            className="max-w-md"
+            defaultValue={0.4}
+            label="Price Range: $"
+            maxValue={1000}
+            minValue={0}
+            step={0.01}
+            value={dataFilter.price}
+            onChange={(data) => handleChange("price", data)}
+          />
+        </div>
+        {user?.roles?.includes("admin") && (
+          <div>
+            <Autocomplete
+              className="max-w-xs"
+              defaultItems={vendors}
+              label="Select Vendor"
+              placeholder="Select Vendor"
+              selectedKey={dataFilter.vendorId}
+              onSelectionChange={(data) => handleChange("vendorId", data)}
             >
-              <div className="flex items-center flex-row gap-2">
-                <Button color="primary" size="sm" onPress={handleSearch}>
-                  <IoMdSearch />
-                </Button>
-                <Button color="warning" size="sm" onPress={handleReset}>
-                  <IoMdClose />
-                </Button>
-              </div>
-              {noFilter && (
-                <div className="text-red-500 text-sm">{noFilter}</div>
+              {(item) => (
+                <AutocompleteItem key={item.key}>{item.label}</AutocompleteItem>
               )}
-            </div>
+            </Autocomplete>
           </div>
-        </CardBody>
-      </Card>
+        )}
+
+        <div
+          className={
+            noFilter
+              ? "flex flex-col gap-3"
+              : "flex flex-col items-center justify-center gap-3"
+          }
+        >
+          <div className="flex items-center flex-row gap-2">
+            <Button color="primary" size="sm" onPress={handleSearch}>
+              <IoMdSearch />
+            </Button>
+            <Button color="warning" size="sm" onPress={handleReset}>
+              <IoMdClose />
+            </Button>
+          </div>
+          {noFilter && <div className="text-red-500 text-sm">{noFilter}</div>}
+        </div>
+      </div>
     </div>
   );
 };
