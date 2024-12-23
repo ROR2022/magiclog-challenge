@@ -125,9 +125,8 @@ const FilterProducts: FC<IFilterProducts> = ({
                 : "flex flex-row justify-between"
             }
           >
-            <div>
+            <div inert>
               <Input
-                aria-hidden="true"
                 label="Search Products"
                 placeholder="Search by Name or SKU..."
                 value={dataFilter.query}

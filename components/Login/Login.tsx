@@ -97,11 +97,11 @@ const Login = () => {
 
       setLoading(false);
       //eslint-disable-next-line
-      console.log("login response:..", response);
+      //console.log("login response:..", response);
       const { data } = response;
 
       if (data && data.dataUser && data.dataUser.access_token) {
-        console.log("login data.dataUser", data.dataUser);
+        //console.log("login data.dataUser", data.dataUser);
         const { roles } = data.dataUser;
 
         if (roles.includes(ROLE_ADMIN)) {
